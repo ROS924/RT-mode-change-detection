@@ -1,5 +1,5 @@
 import random
-from funcoes import generateTaskFromUtilization
+from classes.task import generateTaskFromUtilization
 
 
 def uunifast(n, U):
@@ -13,7 +13,7 @@ def uunifast(n, U):
     AllSum = 0
 
     #summation over all utilization for finding global utilization
-    for i in range(len(vectU)):
+    for i in range(len(vectU)): 
         AllSum += vectU[i]
 
     return AllSum, vectU
