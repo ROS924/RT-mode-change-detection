@@ -8,12 +8,14 @@ def generateTaskFromUtilization(UtilizationSet):
         taskList.append(Task(e,p,p))
     return taskList
 
-class Task(object):
+class Task:
     def __init__(self, C, T, D):
         self.executionTime = C
         self.period = T
         self.deadline = D   
 
+    def __repr__(self):
+        return repr((self.executionTime, self.period, self.deadline))
 
     def getPeriod(self):
         return self.period
