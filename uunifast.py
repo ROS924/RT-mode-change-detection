@@ -1,5 +1,5 @@
 import random
-from classes.task import generateTaskFromUtilization
+from classes.task import Task, generateTaskFromUtilization
 
 
 def uunifast(n, U):
@@ -43,3 +43,22 @@ def uunifasts(N, n, U):
 JOB_NUMBERS = 6 #task number in each list 
 UTILIZATION = 1 #Utilization
 uunifasts(RUN, JOB_NUMBERS, UTILIZATION)'''
+
+def generateTaskSet(taskQuantity:int,ImplicitDeadline:bool):
+    taskSet = []
+    i = 1
+    while i <= taskQuantity:
+        T = random.randint(2,50)
+        C = random.randint(1,T//2)
+        D = random.randint(C,T)
+
+        task = Task(C, T ,D)
+
+        if(ImplicitDeadline == True):
+            task.setImplicitDeadline()
+
+        taskSet.append(task)
+
+        i += 1
+    
+    return taskSet
