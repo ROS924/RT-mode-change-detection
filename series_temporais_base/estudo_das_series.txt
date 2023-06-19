@@ -1,0 +1,15 @@
+t#.json
+
+    t1 -> U = 1,20  U Média = 0,24  1°OpMode = (3, 10)  Perda de deadline no 1°OpMode = 40%
+    t2 -> U = 1,29  U Média = 0,25  1°OpMode = (4, 10)  Perda de deadline no 1°OpMode = 60%
+    t3 -> U = 1,23  U Média = 0,24  1°OpMode = (3, 10)  Perda de deadline no 1°OpMode = 40%
+
+
+
+tarefa#.json
+
+    U(tarefa1) = 0,98
+    U(tarefa2) = 0,99
+    U(tarefa3) = 0,99
+
+    U Média = 0,98
