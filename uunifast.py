@@ -47,9 +47,10 @@ uunifasts(RUN, JOB_NUMBERS, UTILIZATION)'''
 def generateTaskSet(taskQuantity:int,ImplicitDeadline:bool):
     taskSet = []
     i = 1
+    t = random.randint(2,50)
     while i <= taskQuantity:
-        T = random.randint(2,50)
-        C = random.randint(1,T//2)
+        T = t
+        C = random.randint(1,T)
         D = random.randint(C,T)
 
         task = Task(C, T ,D)
