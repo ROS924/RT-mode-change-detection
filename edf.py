@@ -65,62 +65,62 @@ class EDF:
 
             # Executando
             if (Overloading == False) :
-                
-                ExecutingServer.executedTime += 1
-                ExecutingServer.executionTimePerQuantum += 1
-                # ExecutingServer.PrintList.append("X")
+                if (ExecutingServer != None):
+                    ExecutingServer.executedTime += 1
+                    ExecutingServer.executionTimePerQuantum += 1
+                    # ExecutingServer.PrintList.append("X")
 
 
-                if ExecutingServer != None:
-                    #self.progress_table.loc[int(ExecutingServer.ProcessId),TotalTime-1].configure({"background":'Green'}) #Ao ler o processo marca ele como verde                       
-                    print(f"Executando servidor {ExecutingServer.getId()} no tempo {TotalTime}")
-                    print(ExecutingServer.getExecutedTime(), ExecutingServer.getTaskExecTime(), ExecutingServer.getTaskDeadline())
+                    if ExecutingServer != None:
+                        #self.progress_table.loc[int(ExecutingServer.ProcessId),TotalTime-1].configure({"background":'Green'}) #Ao ler o processo marca ele como verde                       
+                        print(f"Executando servidor {ExecutingServer.getId()} no tempo {TotalTime}")
+                        print(ExecutingServer.getExecutedTime(), ExecutingServer.getTaskExecTime(), ExecutingServer.getTaskDeadline())
 
-                    #TotalTime-1
+                        #TotalTime-1
+                        
+                        
                     
-                    
-                
-                if ( ExecutingServer.getExecutedTime() > ExecutingServer.getDeadline() ):
-                        ExecutingServer.metDeadline = False
-                # else:
-                #     print(f'TotalTime: {TotalTime}') #Codigo de debug
-                #     print(f'ProcessId: {int(ExecutingServer.ProcessId)}') #Codigo de debug
-                #     self.progress_table.loc[int(ExecutingServer.ProcessId),TotalTime-1].configure({"background":'Green'}) #Ao ler o processo marca ele como verde
-                #     
+                    if ( ExecutingServer.getExecutedTime() > ExecutingServer.getDeadline() ):
+                            ExecutingServer.metDeadline = False
+                    # else:
+                    #     print(f'TotalTime: {TotalTime}') #Codigo de debug
+                    #     print(f'ProcessId: {int(ExecutingServer.ProcessId)}') #Codigo de debug
+                    #     self.progress_table.loc[int(ExecutingServer.ProcessId),TotalTime-1].configure({"background":'Green'}) #Ao ler o processo marca ele como verde
+                    #     
 
-                if ExecutingServer.getExecutedTime() == ExecutingServer.getTaskExecTime(): # Remove o processo caso tenha terminado
-                    sinal = False
-                    tempoEspera = TotalTime - ExecutingServer.getStartTime()
-                    if(tempoEspera <= ExecutingServer.getTaskDeadline()):
-                        print(f"servidor {ExecutingServer.getId()}, Deadline: OK")
-                    else:
-                        print(f"servidor {ExecutingServer.getId()}, Deadline: PERDIDO")
-                        for serv in CopyArray:
-                            if(ExecutingServer.getId() == serv.getId()):
-                                serv.deadlineLost += 1
-                    
-                    for servidor in ReadyList:
-                        if(ExecutingServer.getId() == servidor.getId()):
-                            if(servidor.changeTask()):
-                                print(f"Servidor {servidor.getId()} foi para a próxima instância da tarefa")
-                                tempoChegada = servidor.getStartTime()
-                                proximaChegada = tempoChegada + servidor.getTaskDeadline()
-                                servidor.startTime = proximaChegada
-                                servidor.executedTime = 0
-                                servidor.executionTimePerQuantum = 0
-                            else:
-                                sinal = True
-                                break
+                    if ExecutingServer.getExecutedTime() == ExecutingServer.getTaskExecTime(): # Remove o processo caso tenha terminado
+                        sinal = False
+                        tempoEspera = TotalTime - ExecutingServer.getStartTime()
+                        if(tempoEspera <= ExecutingServer.getTaskDeadline()):
+                            print(f"servidor {ExecutingServer.getId()}, Deadline: OK")
+                        else:
+                            print(f"servidor {ExecutingServer.getId()}, Deadline: PERDIDO")
+                            for serv in CopyArray:
+                                if(ExecutingServer.getId() == serv.getId()):
+                                    serv.deadlineLost += 1
+                        
+                        for servidor in ReadyList:
+                            if(ExecutingServer.getId() == servidor.getId()):
+                                if(servidor.changeTask()):
+                                    print(f"Servidor {servidor.getId()} foi para a próxima instância da tarefa")
+                                    tempoChegada = servidor.getStartTime()
+                                    proximaChegada = tempoChegada + servidor.getTaskDeadline()
+                                    servidor.startTime = proximaChegada
+                                    servidor.executedTime = 0
+                                    servidor.executionTimePerQuantum = 0
+                                else:
+                                    sinal = True
+                                    break
 
-                    if (sinal == True):
-                        print(f"fim da série temporal do servidor {ExecutingServer.getId()}")
-                        ReadyList = np.delete(ReadyList, np.where(ReadyList == ExecutingServer))            
+                        if (sinal == True):
+                            print(f"fim da série temporal do servidor {ExecutingServer.getId()}")
+                            ReadyList = np.delete(ReadyList, np.where(ReadyList == ExecutingServer))            
 
-                    ExecutingServer = None     
+                        ExecutingServer = None     
 
-                elif ExecutingServer.getExecutionTimePerQuantum() == ExecutingServer.getBudget(): # Chega se acabou o tempo dele 
-                    ExecutingServer.ExecutionTimePerQuantum = 0
-                    Overloading = True        
+                    elif ExecutingServer.getExecutionTimePerQuantum() == ExecutingServer.getBudget(): # Chega se acabou o tempo dele 
+                        ExecutingServer.ExecutionTimePerQuantum = 0
+                        Overloading = True        
   
             else:
                 print("Overloading")
