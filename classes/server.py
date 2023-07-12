@@ -90,10 +90,10 @@ class SERVER:
         pass
 
     def changeTask(self):
-        taskQuantity = len(self.getTaskCalls())
-        if(self.taskIndex < taskQuantity):
+        taskQuantity = len(self.taskCalls)
+        if(self.taskIndex < (taskQuantity-1)):
             self.taskIndex += 1
-            tarefa = self.taskCalls[self.taskIndex-1]
+            tarefa = self.taskCalls[self.getTaskIndex()]
             self.currentTask = task.Task(tarefa[0], tarefa[1], tarefa[1])
             return True
         else:
@@ -105,3 +105,6 @@ class SERVER:
     def deadlinesPerdidos(self):
         perdidos = self.deadlineLost / len(self.taskCalls)
         return perdidos
+    
+    def getTaskIndex(self):
+        return self.taskIndex

@@ -139,7 +139,6 @@ class EDF:
         for serv in CopyArray:
             perdidos = serv.deadlinesPerdidos()            
             print(f"\n\nServidor {serv.getId()} perdeu {perdidos*100}% dos seus deadlines")
-
         return
     
     
