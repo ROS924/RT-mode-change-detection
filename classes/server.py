@@ -1,5 +1,5 @@
-from opmode import OPMODE
-from task import Task
+from classes import opmode, task
+
 
 class SERVER:
     def __init__(self, id:int, taskCalls:list, modeList:list):
@@ -7,12 +7,13 @@ class SERVER:
         self.taskIndex = 0
         self.taskCalls = taskCalls
         self.modeList = modeList
-        self.currentMode = OPMODE(modeList[0].budget,modeList[0].deadline)
-        self.currentTask = Task(taskCalls[self.taskIndex].executionTime,taskCalls[self.taskIndex].period,taskCalls[self.taskIndex].deadline)
+        self.currentMode = opmode.OPMODE(modeList[0].budget,modeList[0].deadline)
+        self.currentTask = task.Task(taskCalls[self.taskIndex][0],taskCalls[self.taskIndex][1],taskCalls[self.taskIndex][1])
         self.startTime = 0
         self.executedTime = 0
         self.executionTimePerQuantum = 0
         self.metDeadline = True
+        self.deadlineLost = 0
 
     def getTaskCalls(self):
         return self.taskCalls
@@ -69,7 +70,7 @@ class SERVER:
         return self.executionTimePerQuantum
 
     def clone(self):
-        serv = SERVER()
+        serv = SERVER(self.id,self.taskCalls,self.modeList)
         serv.id = self.id
         serv.taskCalls = self.taskCalls
         serv.modeList = self.modeList
@@ -79,6 +80,8 @@ class SERVER:
         serv.startTime = self.startTime
         serv.executionTimePerQuantum = self.executionTimePerQuantum
         serv.taskIndex = self.taskIndex
+        serv.metDeadline = self.metDeadline
+        serv.deadlineLost = self.deadlineLost
 
         return serv
 
@@ -90,8 +93,15 @@ class SERVER:
         taskQuantity = len(self.getTaskCalls())
         if(self.taskIndex < taskQuantity):
             self.taskIndex += 1
-            task = self.taskCalls[self.taskIndex]
-            self.currentTask = Task(task.executionTime, task.period, task.deadline)
+            tarefa = self.taskCalls[self.taskIndex-1]
+            self.currentTask = task.Task(tarefa[0], tarefa[1], tarefa[1])
             return True
         else:
             return False
+        
+    def getDeadlineLost(self):
+        return self.deadlineLost
+    
+    def deadlinesPerdidos(self):
+        perdidos = self.deadlineLost / len(self.taskCalls)
+        return perdidos
