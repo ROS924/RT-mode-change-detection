@@ -7,7 +7,7 @@ class SERVER:
         self.taskIndex = 0
         self.taskCalls = taskCalls
         self.modeList = modeList
-        self.currentMode = opmode.OPMODE(modeList[0].budget,modeList[0].deadline)
+        self.currentMode = opmode.OPMODE(modeList[0].id,modeList[0].budget,modeList[0].deadline,modeList[0].beneficio)
         self.currentTask = task.Task(taskCalls[self.taskIndex][0],taskCalls[self.taskIndex][1],taskCalls[self.taskIndex][1])
         self.startTime = 0
         self.executedTime = 0

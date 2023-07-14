@@ -2,11 +2,11 @@ from classes import opmode,server
 from series_temporais_base.tarefas import t1, t2, t3
 from edf import EDF
 
-server1ModeList = [opmode.OPMODE(10,100),opmode.OPMODE(30,20),opmode.OPMODE(10,200),opmode.OPMODE(7,100)]
-server2ModeList = [opmode.OPMODE(15,50),opmode.OPMODE(25,100),opmode.OPMODE(8,40),opmode.OPMODE(9,60)]
-server3ModeList = [opmode.OPMODE(50,100),opmode.OPMODE(16,40),opmode.OPMODE(21,60),opmode.OPMODE(10,50)]
-server4ModeList = [opmode.OPMODE(35,50),opmode.OPMODE(110,200),opmode.OPMODE(30,50),opmode.OPMODE(15,50)]
-server5ModeList = [opmode.OPMODE(56,70),opmode.OPMODE(30,40),opmode.OPMODE(65,100),opmode.OPMODE(40,100)]
+server1ModeList = [opmode.OPMODE(1,10,100,0.125),opmode.OPMODE(2,15,50,0.375),opmode.OPMODE(3,50,100,0.625),opmode.OPMODE(4,35,50,0.875),opmode.OPMODE(5,56,70,1.00)]
+server2ModeList = [opmode.OPMODE(1,30,200,0.200),opmode.OPMODE(2,25,100,0.333),opmode.OPMODE(3,16,40,0.533),opmode.OPMODE(4,10,200,0.733),opmode.OPMODE(5,30,40,1.00)]
+server3ModeList = [opmode.OPMODE(1,10,200,0.076),opmode.OPMODE(2,8,40,0.307),opmode.OPMODE(3,21,60,0.538),opmode.OPMODE(4,30,50,0.923),opmode.OPMODE(5,65,100,1.00)]
+server4ModeList = [opmode.OPMODE(1,7,100,0.175),opmode.OPMODE(2,9,60,0.375),opmode.OPMODE(3,10,50,0.500),opmode.OPMODE(4,15,50,0.750),opmode.OPMODE(5,40,100,1.00)]
+
 
 server1 = server.SERVER(1,t1,server1ModeList)
 server2 = server.SERVER(2,t2,server2ModeList)
@@ -17,5 +17,3 @@ serverArray = [server1, server2, server3]
 escalonador = EDF()
 
 escalonador.Edf(serverArray)
-
-
