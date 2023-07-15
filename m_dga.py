@@ -58,6 +58,17 @@ def M_DGA(serverList):
     wLinha.append(parLinha)
 
     w = DGA(serverList)  
-    
-      
-    pass
+
+    fdW = 0
+    fdWLinha = 0
+
+    for pair in wLinha:
+        fdWLinha += pair.mode.beneficio
+
+    for pair in w:
+        fdW += pair.mode.beneficio
+
+    if (fdWLinha > fdW):
+        return wLinha
+    else:
+        return w
