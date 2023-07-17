@@ -15,7 +15,7 @@ class EDF:
 
     
     
-    def Edf(self, ServerArray:server.SERVER, maxTime = 1000):
+    def Edf(self, ServerArray:server.SERVER, maxTime = 1000000):
         
         """This function implement the earliest deadline first algorithm
         It's a dynamic priority algorithm in which there's a priority queue based on the closeness to each servidor' deadline.
