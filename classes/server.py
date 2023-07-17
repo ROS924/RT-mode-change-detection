@@ -1,19 +1,25 @@
 from classes import opmode, task
+from river import drift
+from operator import attrgetter
+
+
+adwin = drift.ADWIN(clock=1)
 
 
 class SERVER:
-    def __init__(self, id:int, taskCalls:list, modeList:list):
+    def __init__(self, id:int, taskCalls:list, modeList:list,chegada=0):
         self.id = id
         self.taskIndex = 0
         self.taskCalls = taskCalls
         self.modeList = modeList
         self.currentMode = opmode.OPMODE(modeList[0].id,modeList[0].budget,modeList[0].deadline,modeList[0].beneficio)
-        self.currentTask = task.Task(taskCalls[self.taskIndex][0],taskCalls[self.taskIndex][1],taskCalls[self.taskIndex][1])
-        self.startTime = 0
+        self.currentTask = taskCalls[self.taskIndex]#task.Task(taskCalls[self.taskIndex][0],taskCalls[self.taskIndex][1],taskCalls[self.taskIndex][1])
+        self.startTime = chegada
         self.executedTime = 0
         self.executionTimePerQuantum = 0
         self.metDeadline = True
         self.deadlineLost = 0
+        self.completedTasks = [self.currentMode.budget,self.currentMode.budget,self.currentMode.budget,self.currentMode.budget,self.currentMode.budget,self.currentMode.budget,self.currentMode.budget,self.currentMode.budget,self.currentMode.budget]
 
     def getTaskCalls(self):
         return self.taskCalls
@@ -82,19 +88,27 @@ class SERVER:
         serv.taskIndex = self.taskIndex
         serv.metDeadline = self.metDeadline
         serv.deadlineLost = self.deadlineLost
+        serv.completedTasks =self.completedTasks
 
         return serv
+   
+    def changeCurrentMode(self,par):
+        self.currentMode = opmode.OPMODE(par.mode.id,par.mode.budget,par.mode.deadline,par.mode.beneficio)
+        return None
 
+    def checkChange(self):
+        for indice, c in enumerate(self.completedTasks):
+            adwin.update(c)
+            #if indice == (len(self.completedTasks)-1):
+            return adwin.drift_detected
 
-    def changeCurrentMode(self):
-        pass
 
     def changeTask(self):
         taskQuantity = len(self.taskCalls)
         if(self.taskIndex < (taskQuantity-1)):
             self.taskIndex += 1
             tarefa = self.taskCalls[self.getTaskIndex()]
-            self.currentTask = task.Task(tarefa[0], tarefa[1], tarefa[1])
+            self.currentTask = tarefa #task.Task(tarefa[0], tarefa[1], tarefa[1])
             return True
         else:
             return False
